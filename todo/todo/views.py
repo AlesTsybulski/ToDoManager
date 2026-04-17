@@ -67,6 +67,14 @@ def edit_todo(request, srno):
     return render(request, 'edit_todo.html', {'obj': obj})
 
 
+@login_required(login_url='/loginn/')
+def toggle_todo(request, srno):
+    obj = get_object_or_404(TODOO, srno=srno, user=request.user)
+    obj.status = not obj.status
+    obj.save()
+    return redirect('/todopage/')
+
+
 def signout(request):
     logout(request)
     return redirect('/loginn/')

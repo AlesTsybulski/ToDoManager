@@ -22,7 +22,7 @@
                 <div class="heads">
                     <div class="heading">Get Things Done?</div>
                     <div class="anca">
-                        <a href="{% url 'signout' %}" class="sign">
+                        <a href="{% url 'logout' %}" class="sign">
                             <i class="fa-solid fa-right-from-bracket"></i>
                         </a>
                     </div>
@@ -36,9 +36,9 @@
                 </form>
 
                 {% for todo in res %}
-                <div class="Todo clickable-div {% if todo.status %}todo-green{% else %}todo-red{% endif %}">
+                <div class="Todo clickable-div {% if todo.status %}todo-green{% else %}todo-red{% endif %}" onclick="window.location.href='{% url 'toggle_todo' todo.srno %}'">
                     <p class="{% if todo.status %}completed{% endif %}">{{ todo.title }}</p>
-                    <div>
+                    <div onclick="event.stopPropagation()">
                         <a href="{% url 'edit_todo' todo.srno %}">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
