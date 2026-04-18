@@ -1,50 +1,41 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% block title %}Sign Up — TaskFlow{% endblock %}
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
-    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" />
-</head>
+{% block content %}
+<div class="page">
+    <div class="card">
+        <div class="card-header" style="flex-direction:column;gap:var(--space-1);">
+            <div class="card-title">Create account</div>
+            <div class="card-subtitle">Start managing your tasks today</div>
+        </div>
 
-<body>
-    <div class="signup-login">
-        <div class="signup-box">
-            <form method="post">
-                {% csrf_token %}
-                <div class="heading">SignUp</div>
-                <div class="line"></div>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <label class="label" for="id_username">Username</label>
+            <input id="id_username" class="input" type="text" name="fnm" required
+                   placeholder="Choose a username" autocomplete="username">
 
-                <div class="field">
-                    <b>Username</b>
-                    <input class="inp" type="text" name="fnm" required placeholder="Enter Your Username">
-                </div>
+            <label class="label" for="id_email">Email</label>
+            <input id="id_email" class="input" type="email" name="emailid" required
+                   placeholder="Enter your email" autocomplete="email">
 
-                <div class="field">
-                    <b>Email</b>
-                    <input class="inp" type="email" name="emailid" required placeholder="Enter Your Email">
-                </div>
+            <label class="label" for="id_telegram">
+                Telegram tag <span class="label-note">(optional)</span>
+            </label>
+            <input id="id_telegram" class="input" type="text" name="telegram_tag"
+                   placeholder="@yourtag" autocomplete="off">
 
-                <div class="field">
-                    <b>Password</b>
-                    <input class="inp" type="password" name="pwd" required placeholder="Enter Password">
-                </div>
+            <label class="label" for="id_password">Password</label>
+            <input id="id_password" class="input" type="password" name="pwd" required
+                   placeholder="Choose a password" autocomplete="new-password">
 
-                <div class="field">
-                    <input class="submit-button" type="submit" value="Signup">
-                </div>
-                <div class="line"></div>
+            <input class="btn" type="submit" value="Create account">
+        </form>
 
-                <div class="field">
-                    <b>Already have an account?</b>
-                    <br>
-                    <a class="anc" href="{% url 'login' %}">Login</a>
-                </div>
-            </form>
+        <div class="divider"></div>
+        <div class="auth-link">
+            Already have an account? <a href="{% url 'login' %}">Sign in</a>
         </div>
     </div>
-</body>
-
-</html>
+</div>
+{% endblock %}

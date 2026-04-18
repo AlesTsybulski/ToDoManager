@@ -1,31 +1,32 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% block title %}Edit Task — TaskFlow{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Todo</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" />
-    <script src="https://kit.fontawesome.com/cb792c0850.js" crossorigin="anonymous"></script>
-</head>
+{% block content %}
+<div class="page">
+    <div class="card">
+        <div class="card-header" style="flex-direction:column;gap:var(--space-1);">
+            <div class="card-title">Edit Task</div>
+        </div>
 
-<body>
-    <div class="signup-login">
-        <div class="signup-box scr">
-            <div class="heading">Get Things Done?</div>
-            <form method="post">
-                {% csrf_token %}
-                <input type="text" name="title" required class="todo-input inp"
-                    placeholder="What is the task today?" value="{{ obj.title }}">
-                <input type="hidden" name="srno" value="{{ obj.srno }}">
-                <input class="submit-button" type="submit" value="Update Task">
-            </form>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <label class="label" for="id_title">Task title</label>
+            <input id="id_title" type="text" name="title" required class="input"
+                   value="{{ obj.title }}" autocomplete="off">
+
+            <label class="label" for="id_deadline">
+                Deadline <span class="label-note">(optional)</span>
+            </label>
+            <input id="id_deadline" type="datetime-local" name="deadline" class="input"
+                   {% if obj.deadline %}value="{{ obj.deadline|date:'Y-m-d' }}T{{ obj.deadline|date:'H:i' }}"{% endif %}>
+
+            <input class="btn" type="submit" value="Save Changes">
+        </form>
+
+        <div class="divider"></div>
+        <div class="auth-link">
+            <a href="{% url 'todo' %}">← Back to tasks</a>
         </div>
     </div>
-    <script src="{% static 'js/todo.js' %}"></script>
-</body>
-
-</html>
+</div>
+{% endblock %}

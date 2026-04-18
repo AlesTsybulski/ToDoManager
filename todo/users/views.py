@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
 
-# Получаем нашу кастомную модель пользователя
 User = get_user_model()
 
 def signup(request):
@@ -10,8 +9,10 @@ def signup(request):
         username = request.POST.get('fnm')
         email = request.POST.get('emailid')
         password = request.POST.get('pwd')
-        # Создаем пользователя через нашу новую модель
+        telegram_tag = request.POST.get('telegram_tag', '')
         user = User.objects.create_user(username=username, email=email, password=password)
+        user.telegram_tag = telegram_tag
+        user.save()
         return redirect('/loginn/')
 
     return render(request, 'signup.html')

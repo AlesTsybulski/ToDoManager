@@ -1,57 +1,85 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% block title %}TaskFlow{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" />
-    <script src="https://kit.fontawesome.com/cb792c0850.js" crossorigin="anonymous"></script>
-</head>
-
-<body>
-    <div class="signup-login">
-        <div>
+{% block content %}
+<div class="page page--wide">
+    <div class="card">
+        <div class="card-header">
             <div>
-                <h1>Hello {{ user }}</h1>
+                <div class="card-title">My Tasks</div>
+                <div class="greeting">{{ user.username }}</div>
             </div>
-            <div class="signup-box scr">
-                <div class="heads">
-                    <div class="heading">Get Things Done?</div>
-                    <div class="anca">
-                        <a href="{% url 'logout' %}" class="sign">
-                            <i class="fa-solid fa-right-from-bracket"></i>
-                        </a>
+            <a href="{% url 'logout' %}" class="icon-btn" title="Sign out" aria-label="Sign out">
+                <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <label class="label" for="id_title">Task</label>
+            <input id="id_title" type="text" name="title" required class="input"
+                   placeholder="What needs to be done?" autocomplete="off">
+
+            <label class="label" for="id_deadline">
+                Deadline <span class="label-note">(optional)</span>
+            </label>
+            <input id="id_deadline" type="datetime-local" name="deadline" class="input">
+
+            <input class="btn" type="submit" value="Add Task">
+        </form>
+
+        <div class="task-list-header">
+            Tasks <span class="task-count-badge">{{ res|length }}</span>
+        </div>
+
+        <div class="task-list" role="list">
+            {% for todo in res %}
+            <div class="task {% if todo.status %}task--done{% else %}task--pending{% endif %}"
+                 role="button"
+                 tabindex="0"
+                 aria-label="{% if todo.status %}Mark pending{% else %}Mark done{% endif %}: {{ todo.title }}"
+                 onclick="window.location.href='{% url 'toggle_todo' todo.srno %}'"
+                 onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.href='{% url 'toggle_todo' todo.srno %}';}">
+                <div class="task-left">
+                    <div class="task-dot" aria-hidden="true"></div>
+                    <div class="task-body">
+                        <div class="task-name">{{ todo.title }}</div>
+                        {% if todo.deadline %}
+                        <div class="task-deadline">
+                            <i class="fa-regular fa-clock" aria-hidden="true"></i>
+                            <time datetime="{{ todo.deadline|date:'Y-m-d\TH:i' }}">
+                                {{ todo.deadline|date:"M j, Y · H:i" }}
+                            </time>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
-
-                <form method="post">
-                    {% csrf_token %}
-                    <input type="text" name="title" required class="todo-input inp"
-                        placeholder="What is the task today?">
-                    <input class="submit-button" type="submit" value="Add Task">
-                </form>
-
-                {% for todo in res %}
-                <div class="Todo clickable-div {% if todo.status %}todo-green{% else %}todo-red{% endif %}" onclick="window.location.href='{% url 'toggle_todo' todo.srno %}'">
-                    <p class="{% if todo.status %}completed{% endif %}">{{ todo.title }}</p>
-                    <div onclick="event.stopPropagation()">
-                        <a href="{% url 'edit_todo' todo.srno %}">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
-                        <a href="{% url 'delete_todo' todo.srno %}">
-                            <i class="fa-solid fa-trash"></i>
-                        </a>
-                    </div>
+                <div class="task-actions"
+                     onclick="event.stopPropagation()"
+                     onkeydown="event.stopPropagation()">
+                    <a href="{% url 'edit_todo' todo.srno %}"
+                       title="Edit task"
+                       aria-label="Edit {{ todo.title }}">
+                        <i class="fa-solid fa-pen" aria-hidden="true"></i>
+                    </a>
+                    <form method="post" action="{% url 'delete_todo' todo.srno %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit"
+                                class="btn-delete"
+                                title="Delete task"
+                                aria-label="Delete {{ todo.title }}">
+                            <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                        </button>
+                    </form>
                 </div>
-                {% endfor %}
             </div>
+            {% empty %}
+            <div class="empty-state" role="status" aria-live="polite">
+                <i class="fa-solid fa-clipboard-list" aria-hidden="true"></i>
+                No tasks yet — add one above.
+            </div>
+            {% endfor %}
         </div>
     </div>
-    <script src="{% static 'js/todo.js' %}"></script>
-</body>
-
-</html>
+</div>
+{% endblock %}
