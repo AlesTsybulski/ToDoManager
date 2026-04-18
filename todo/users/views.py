@@ -6,18 +6,32 @@ User = get_user_model()
 
 def signup(request):
     if request.method == 'POST':
-        username = request.POST.get('fnm')
-        email = request.POST.get('emailid')
-        password = request.POST.get('pwd')
-        telegram_tag = request.POST.get('telegram_tag', '')
+        username = request.POST.get('fnm', '').strip()
+        email = request.POST.get('emailid', '').strip()
+        password = request.POST.get('pwd', '')
+        telegram_tag = request.POST.get('telegram_tag', '').strip()
+
+        error = None
+        if not username:
+            error = 'Username is required.'
+        elif not email:
+            error = 'Email is required.'
+        elif not password:
+            error = 'Password is required.'
+        elif User.objects.filter(username=username).exists():
+            error = 'Username already taken.'
+
+        if error:
+            return render(request, 'signup.html', {'error': error, 'fnm': username, 'emailid': email, 'telegram_tag': telegram_tag})
+
         user = User.objects.create_user(username=username, email=email, password=password)
         user.telegram_tag = telegram_tag
         user.save()
-        return redirect('/loginn/')
+        return redirect('/login/')
 
     return render(request, 'signup.html')
 
-def loginn(request):
+def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('fnm')
         password = request.POST.get('pwd')
@@ -26,10 +40,10 @@ def loginn(request):
             login(request, user)
             return redirect('/todopage/')
         else:
-            return redirect('/loginn/')
+            return redirect('/login/')
 
-    return render(request, 'loginn.html')
+    return render(request, 'login.html')
 
 def signout(request):
     logout(request)
-    return redirect('/loginn/')
+    return redirect('/login/')

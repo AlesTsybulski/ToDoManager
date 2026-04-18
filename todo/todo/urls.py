@@ -10,7 +10,7 @@ urlpatterns = [
     
     # Маршруты пользователей
     path('signup/', user_views.signup, name='signup'),
-    path('loginn/', user_views.loginn, name='login'),
+    path('login/', user_views.login_view, name='login'),
     path('logout/', user_views.signout, name='logout'),
     
     # Маршруты задач

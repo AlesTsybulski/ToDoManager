@@ -100,6 +100,17 @@ body::before {
   margin-top: var(--space-1);
 }
 
+/* ── Form errors ── */
+.form-error {
+  background: #3d1a1a;
+  color: #f87171;
+  border: 1px solid #7f1d1d;
+  border-radius: var(--radius);
+  padding: var(--space-2) var(--space-3);
+  font-size: 0.85rem;
+  margin-bottom: var(--space-3);
+}
+
 /* ── Labels ── */
 .label {
   display: block;
@@ -397,6 +408,102 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   display: block;
   opacity: 0.3;
 }
+
+/* ── Home page ── */
+.home-page {
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.home-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.01em;
+}
+
+.home-logo i { font-size: 1.1rem; }
+
+.home-headline {
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+.home-desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.home-features {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.home-feature {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.home-feature i {
+  color: var(--accent);
+  font-size: 0.85rem;
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.home-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.home-btn-primary {
+  flex: 1;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  padding: 0.75rem var(--space-4);
+  background: var(--accent);
+  color: oklch(10% 0.008 55);
+  border-radius: 9px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: background 0.18s ease, box-shadow 0.18s ease;
+  letter-spacing: 0.01em;
+}
+
+.home-btn-primary:hover {
+  background: var(--accent-dim);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.home-btn-secondary {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: color 0.18s ease;
+  text-align: center;
+}
+
+.home-btn-secondary:hover { color: var(--text); }
 
 /* ── Mobile ── */
 @media (max-width: 540px) {

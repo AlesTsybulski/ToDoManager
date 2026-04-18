@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}TaskFlow — Stay on top of your day{% endblock %}
+
+{% block content %}
+<div class="page home-page">
+    <div class="home-logo">
+        <i class="fa-solid fa-list-check" aria-hidden="true"></i>
+        TaskFlow
+    </div>
+
+    <h1 class="home-headline">Stay on top<br>of your day.</h1>
+
+    <p class="home-desc">
+        A clean, focused task manager. Add tasks, set deadlines,
+        and track what's done — all in one place.
+    </p>
+
+    <div class="home-features">
+        <div class="home-feature">
+            <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+            Track tasks as pending or done
+        </div>
+        <div class="home-feature">
+            <i class="fa-regular fa-clock" aria-hidden="true"></i>
+            Set optional deadlines
+        </div>
+        <div class="home-feature">
+            <i class="fa-solid fa-lock" aria-hidden="true"></i>
+            Private to your account
+        </div>
+    </div>
+
+    <div class="home-actions">
+        <a href="{% url 'signup' %}" class="btn home-btn-primary">Get started free</a>
+        
+    </div>
+    <div class="home-actions">
+        <a href="{% url 'login' %}" class="home-btn-secondary">Sign in</a>
+    </div>
+    </div>
+{% endblock %}

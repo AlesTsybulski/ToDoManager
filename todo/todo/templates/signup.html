@@ -9,21 +9,28 @@
             <div class="card-subtitle">Start managing your tasks today</div>
         </div>
 
+        {% if error %}
+        <div class="form-error">{{ error }}</div>
+        {% endif %}
+
         <form method="post" novalidate>
             {% csrf_token %}
             <label class="label" for="id_username">Username</label>
             <input id="id_username" class="input" type="text" name="fnm" required
-                   placeholder="Choose a username" autocomplete="username">
+                   placeholder="Choose a username" autocomplete="username"
+                   value="{{ fnm|default:'' }}">
 
             <label class="label" for="id_email">Email</label>
             <input id="id_email" class="input" type="email" name="emailid" required
-                   placeholder="Enter your email" autocomplete="email">
+                   placeholder="Enter your email" autocomplete="email"
+                   value="{{ emailid|default:'' }}">
 
             <label class="label" for="id_telegram">
                 Telegram tag <span class="label-note">(optional)</span>
             </label>
             <input id="id_telegram" class="input" type="text" name="telegram_tag"
-                   placeholder="@yourtag" autocomplete="off">
+                   placeholder="@yourtag" autocomplete="off"
+                   value="{{ telegram_tag|default:'' }}">
 
             <label class="label" for="id_password">Password</label>
             <input id="id_password" class="input" type="password" name="pwd" required
