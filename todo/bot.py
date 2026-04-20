@@ -19,7 +19,7 @@ from users.models import User
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        'Welcome! To receive task reminders, please send me your TaskFlow account email.'
+        'Welcome! To receive task reminders, please send me your TaskHUB account email.'
     )
 
 
@@ -35,7 +35,7 @@ async def handle_email(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except User.DoesNotExist:
         await update.message.reply_text(
             'No account found with that email. '
-            'Make sure you use the same email you registered with on TaskFlow.'
+            'Make sure you use the same email you registered with on TaskHUB.'
         )
 
 
