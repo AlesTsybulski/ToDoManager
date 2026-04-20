@@ -9,7 +9,6 @@ def signup(request):
         username = request.POST.get('fnm', '').strip()
         email = request.POST.get('emailid', '').strip()
         password = request.POST.get('pwd', '')
-        telegram_tag = request.POST.get('telegram_tag', '').strip()
 
         error = None
         if not username:
@@ -22,11 +21,9 @@ def signup(request):
             error = 'Username already taken.'
 
         if error:
-            return render(request, 'signup.html', {'error': error, 'fnm': username, 'emailid': email, 'telegram_tag': telegram_tag})
+            return render(request, 'signup.html', {'error': error, 'fnm': username, 'emailid': email})
 
-        user = User.objects.create_user(username=username, email=email, password=password)
-        user.telegram_tag = telegram_tag
-        user.save()
+        User.objects.create_user(username=username, email=email, password=password)
         return redirect('/login/')
 
     return render(request, 'signup.html')

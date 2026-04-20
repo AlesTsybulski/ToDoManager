@@ -25,13 +25,6 @@
                    placeholder="Enter your email" autocomplete="email"
                    value="{{ emailid|default:'' }}">
 
-            <label class="label" for="id_telegram">
-                Telegram tag <span class="label-note">(optional)</span>
-            </label>
-            <input id="id_telegram" class="input" type="text" name="telegram_tag"
-                   placeholder="@yourtag" autocomplete="off"
-                   value="{{ telegram_tag|default:'' }}">
-
             <label class="label" for="id_password">Password</label>
             <input id="id_password" class="input" type="password" name="pwd" required
                    placeholder="Choose a password" autocomplete="new-password">

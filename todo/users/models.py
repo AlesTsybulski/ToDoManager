@@ -4,4 +4,4 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
 
-    telegram_tag = models.CharField(max_length=50, blank=True)
+    telegram_chat_id = models.BigIntegerField(null=True, blank=True)

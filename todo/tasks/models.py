@@ -8,6 +8,7 @@ class Task(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField(default=False, blank=True)
     deadline = models.DateTimeField(null=True, blank=True)
+    reminded = models.BooleanField(default=False)
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
